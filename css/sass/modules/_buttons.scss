@@ -1,0 +1,19 @@
+//#-
+%button{
+    @include inline-top;
+    padding: 0 30px;
+    text-decoration: none;
+    font-size: 1.6rem;
+    font-weight: 700;
+
+    &:focus,&:active{
+        text-decoration: none;
+    }
+}
+
+@mixin button($size){
+    @extend %button;
+    line-height: $size;
+    border: none;
+    background: none;
+}

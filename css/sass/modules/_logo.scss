@@ -1,0 +1,13 @@
+.logo{
+    $width: 252px;
+    $height: 114px;
+
+    @include inline-top;
+    width: $width;
+    height: $height;
+    padding: 10px;
+    background: #fff url(../images/logo.png) no-repeat;
+    background-position: center center;
+    background-size: $width $height;
+    
+}

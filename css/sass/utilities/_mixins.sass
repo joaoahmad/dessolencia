@@ -1,0 +1,64 @@
+//#
+
+@mixin inline-top
+    display: inline-block
+    vertical-align: top
+
+// --------------------------------------
+// Responsive
+// --------------------------------------
+
+$breakpoints: large-desktop desktop tablet phablet mobile small-mobile breakpoint
+$breakpoints-variables: $large-desktop $desktop $tablet $phablet $mobile $small-mobile $breakpoint
+$breakpoints-max-variables: 1000em $desktop-max $tablet-max $phablet-max $mobile-max $small-mobile-max $breakpoint
+
+// --------------------------------------
+// BELOW v
+// --------------------------------------
+
+@mixin below($point)
+    @each $breakpoint in $breakpoints
+        $i: index($breakpoints, $breakpoint)
+
+        @if $point == $breakpoint
+            @media screen and (max-width: nth($breakpoints-variables, $i) - 1)
+                @content
+
+// --------------------------------------
+// ABOVE ^
+// --------------------------------------
+
+@mixin above($point)
+    @each $breakpoint in $breakpoints
+        $i: index($breakpoints, $breakpoint)
+
+        @if $point == $breakpoint
+            @media screen and (min-width: nth($breakpoints-max-variables, $i)+1)
+                @content
+
+// --------------------------------------
+// BETWEEN < >
+// --------------------------------------
+
+@mixin between($pointA, $pointB)
+    @each $breakpointA in $breakpoints
+        $i: index($breakpoints, $breakpointA)
+
+        @each $breakpointB in $breakpoints
+            $j: index($breakpoints, $breakpointB)
+
+            @if $pointA == $breakpointA and $pointB == $breakpointB
+                @media screen and (min-width: nth($breakpoints-variables, $i)) and (max-width: nth($breakpoints-max-variables, $j))
+                    @content
+
+// --------------------------------------
+// AT -
+// --------------------------------------
+
+@mixin at($point)
+    @each $breakpoint in $breakpoints
+        $i: index($breakpoints, $breakpoint)
+
+        @if $point == $breakpoint
+            @media screen and (min-width: nth($breakpoints-variables, $i)) and (max-width: nth($breakpoints-max-variables, $i))
+                @content

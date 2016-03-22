@@ -1,0 +1,37 @@
+//#
+
+html
+    font-family: $sans-serif
+    font-size: 62.5%
+    background: #f1f1f1
+    -ms-text-size-adjust: 100%
+    -webkit-text-size-adjust: 100%
+
+    @media screen and (max-width: $phablet-max)
+        font-size: 60%
+
+body
+    display: inline-block
+    vertical-align: top
+    width: 100%
+    background: #f1f1f1
+    max-width: 100%
+    overflow-x: hidden
+
+*, *::before, *::after
+    -webkit-font-smoothing: antialiased
+    -moz-osx-font-smoothing: grayscale
+    box-sizing: border-box
+
+*, *:focus, *:active
+    box-shadow: none
+    outline: none
+
+img
+    max-width: 100%
+
+.dl
+    display: inline-block
+    width: 76px
+    height: 18px
+    background: url(../images/dl.png) no-repeat top left/76px 18px

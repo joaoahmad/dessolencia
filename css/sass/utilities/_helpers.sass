@@ -1,0 +1,96 @@
+//#
+
+// text size ----------
+
+.u-text-medium
+    font-size: 1.6rem
+
+.u-text-large
+    font-size: 1.8rem
+
+.u-text-small
+    font-size: 1rem
+
+// text weight ----------
+
+.u-text-light
+    font-weight: 200
+
+.u-text-medium
+    font-weight: 400
+
+.u-text-strong
+    font-weight: 600
+
+// text align ----------
+
+.u-text-center
+    text-align: center
+
+.u-text-left
+    text-align: left
+
+.u-text-right
+    text-align: right
+
+// margin ----------
+
+.u-margin-bottom
+    margin-bottom: 2rem
+
+.u-margin-bottom-small
+    margin-bottom: 1rem
+
+.u-margin-top
+    margin-top: 2rem
+
+.u-margin-top-small
+    margin-top: 1rem
+
+// float ----------
+
+.u-pull-left
+    float: left
+
+.u-pull-right
+    float: right
+
+// hide's & show's ----------
+
+.u-hide
+    display: none !important
+    @media screen and (max-width: $mobile-max)
+        &-mobile
+            display: none !important
+
+    @media screen and (max-width: $phablet-max)
+        &-phablet
+            display: none !important
+
+    @media screen and (max-width: $tablet-max)
+        &-tablet
+            display: none !important
+
+    @media screen and (max-width: $desktop-max)
+        &-desktop
+            display: none !important
+
+// show's ...
+
+.u-show
+    display: block !important
+    @media screen and (min-width: $mobile)
+        &-mobile
+            display: block !important
+
+    @media screen and (min-width: $phablet)
+        &-phablet
+            display: block !important
+
+    @media screen and (min-width: $tablet)
+        &-tablet
+            display: block !important
+
+    @media screen and (min-width: $desktop)
+        &-desktop
+            display: block !important
