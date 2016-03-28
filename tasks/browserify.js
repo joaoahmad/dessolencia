@@ -8,7 +8,7 @@ module.exports = function(grunt){
             options: {
                 watch: true,
                 keepAlive: true,
-                transform: [[ 'babelify', { presets: ["es2015", "react"] } ]]
+                transform: [[ 'babelify', { presets: ["react", "es2015"] } ]],
             }
         },
 

@@ -32,7 +32,12 @@ var data = [
     {
         id: '123',
         name: 'Barra da Tijuca',
-        coordinates: [[[ -22.918106, -43.364866 ]]]
+        coordinates: [[[ -43.388206, -23.010105 ], [ -43.378206, -22.990105 ], [ -43.368206, -22.990105 ], [ -43.358206, -23.000105 ]]]
+    },
+    {
+        id: '123',
+        name: 'Casa',
+        coordinates: [[[ -43.451591, -22.855726 ],[ -43.452591, -22.846726 ],[ -43.453591, -22.857726 ],[ -43.452591, -22.856726 ]]]
     },
 ]
 
@@ -99,7 +104,7 @@ class Map extends React.Component {
 
         map.on('locationfound', function(e) {
             // gps.setLatLng([e.latlng.lat, e.latlng.lng]);
-            // map.setView(e.latlng, 16);
+            map.setView(e.latlng, 16);
             gps.setLatLng(e.latlng);
             var loop = setInterval(function(){
                 _this.check();

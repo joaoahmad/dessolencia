@@ -8,15 +8,6 @@ class App extends React.Component {
     super();
   }
 
-  componentDidMount() {
-  }
-
-  componentWillUpdate() {
-  }
-
-  componentWillUnmount() {
-  }
-
   render() {
     return (
       <div id="layout" ref="layout" className="content-wrapper">

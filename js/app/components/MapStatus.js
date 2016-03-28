@@ -5,8 +5,8 @@ import { Link } from 'react-router';
 import classNames from 'classnames';
 
 class MapStatus extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
     }
 
     componentDidMount() {
@@ -15,7 +15,7 @@ class MapStatus extends React.Component {
     render() {
         let content;
         let classes = classNames("map-status", {
-            "-notsafe": (this.props.dangers.length > 0),
+            "-notsafe": (this.props.dangers.length),
         });
         if (this.props.dangers.length) {
             content = this.props.dangers.map((location, i) => (<div key="{i}">{location.feature.properties.name}</div>));

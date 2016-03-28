@@ -52,15 +52,6 @@ var App = function (_React$Component) {
   }
 
   _createClass(App, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {}
-  }, {
-    key: 'componentWillUpdate',
-    value: function componentWillUpdate() {}
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {}
-  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -139,7 +130,11 @@ var data = [{
 }, {
     id: '123',
     name: 'Barra da Tijuca',
-    coordinates: [[[-22.918106, -43.364866]]]
+    coordinates: [[[-43.388206, -23.010105], [-43.378206, -22.990105], [-43.368206, -22.990105], [-43.358206, -23.000105]]]
+}, {
+    id: '123',
+    name: 'Casa',
+    coordinates: [[[-43.451591, -22.855726], [-43.452591, -22.846726], [-43.453591, -22.857726], [-43.452591, -22.856726]]]
 }];
 
 console.log(data);
@@ -211,7 +206,7 @@ var Map = function (_React$Component) {
 
             map.on('locationfound', function (e) {
                 // gps.setLatLng([e.latlng.lat, e.latlng.lng]);
-                // map.setView(e.latlng, 16);
+                map.setView(e.latlng, 16);
                 gps.setLatLng(e.latlng);
                 var loop = setInterval(function () {
                     _this.check();
@@ -304,10 +299,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var MapStatus = function (_React$Component) {
     _inherits(MapStatus, _React$Component);
 
-    function MapStatus() {
+    function MapStatus(props) {
         _classCallCheck(this, MapStatus);
 
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(MapStatus).call(this));
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(MapStatus).call(this, props));
     }
 
     _createClass(MapStatus, [{
@@ -318,7 +313,7 @@ var MapStatus = function (_React$Component) {
         value: function render() {
             var content = void 0;
             var classes = (0, _classnames2.default)("map-status", {
-                "-notsafe": this.props.dangers.length > 0
+                "-notsafe": this.props.dangers.length
             });
             if (this.props.dangers.length) {
                 content = this.props.dangers.map(function (location, i) {
