@@ -1,0 +1,56 @@
+.hamburger
+    position: relative
+    display: block
+    width: 24px
+    padding: 15px 6px
+    margin: 10px 0 0 6px
+    background: #fff
+    box-sizing: content-box
+    z-index: 1001
+
+    .-scrolling &
+        position: fixed
+        padding: 20px 12px
+
+    +above(breakmenu)
+        display: none
+
+    // +below(mobile)
+    //     padding: 16px 10px
+
+    span
+        position: relative
+        display: inline-block
+        top: -1px
+        height: 2px
+        width: 100%
+        background: $dark
+        transition: 0.33s $cubic
+
+        .-menu-open &
+            background: transparent
+
+        &:before, &:after
+            content: ''
+            position: absolute
+            display: block
+            left: 0
+            height: 2px
+            width: 100%
+            background: $dark
+            transition: 0.33s $cubic
+            will-transform: rotateZ
+
+        &:before
+            top: -8px
+
+            .-menu-open &
+                top: 0
+                transform: rotateZ(45deg)
+
+        &:after
+            top: 8px
+
+            .-menu-open &
+                top: 0
+                transform: rotateZ(-45deg)

@@ -3,7 +3,7 @@ module.exports = function(grunt){
 
         styles: {
             files: ['css/sass/**/*.sass', 'css/sass/**/*.scss'],
-            tasks: ['sass:dev','postcss:dev']
+            tasks: ['sass:dev']
         },
 
         // scripts: {

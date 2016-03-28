@@ -3,20 +3,25 @@
 html
     font-family: $sans-serif
     font-size: 62.5%
-    background: #f1f1f1
     -ms-text-size-adjust: 100%
     -webkit-text-size-adjust: 100%
 
-    @media screen and (max-width: $phablet-max)
-        font-size: 60%
+    +between(tablet, desktop)
+        font-size: 58%
+
+    +below(tablet)
+        font-size: 50%
 
 body
     display: inline-block
     vertical-align: top
     width: 100%
-    background: #f1f1f1
+    background: #fff
     max-width: 100%
     overflow-x: hidden
+
+    +below(breakmenu)
+        padding-top: 78px
 
 *, *::before, *::after
     -webkit-font-smoothing: antialiased
@@ -35,3 +40,8 @@ img
     width: 76px
     height: 18px
     background: url(../images/dl.png) no-repeat top left/76px 18px
+
+[data-animation]
+    opacity: 0
+    &.animated
+        opacity: 1

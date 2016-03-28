@@ -1,0 +1,27 @@
+//#-
+.menu-list
+    display: inline-block
+    vertical-align: top
+    list-style: none
+    padding: 0
+    margin: 0
+
+    > .menu-item
+        display: block
+
+    .link
+        @extend %link-none
+        color: $dark
+        font-size: 1.3rem
+        font-weight: 500
+        line-height: 2.8rem
+
+    &.-inline
+        > .menu-item
+            display: inline-block
+            margin-left: 10px
+
+            &:first-child
+                margin-left: 0 !important
+                
+    &.-social

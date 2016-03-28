@@ -19,7 +19,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div id="layout" ref="layout">
+      <div id="layout" ref="layout" className="content-wrapper">
         {this.props.children}
       </div>
     );

@@ -1,58 +1,82 @@
 //#
 // $jeet-gutter: 1
 
-[class*=col-]
+[class*=col-],
+[class*=span-]
     width: 100%
 
 @for $i from 1 through 12
     .col-#{$i}
-        @include col($i/12)
+        +col($i/12)
+
+    .span-#{$i}
+        +span($i/12)
 
 @for $i from 1 through 12
     @media screen and (min-width: $mobile)
         .col-sm-#{$i}
-            @include col($i/12)
+            +col($i/12)
 
         .col-sm-pull-#{$i}
-            @include shift(-$i/12)
+            +shift(-$i/12)
 
         .col-sm-push-#{$i}
-            @include shift($i/12)
+            +shift($i/12)
+
+        .span-sm-#{$i}
+            +span($i/12)
 
 @for $i from 1 through 12
     @media screen and (min-width: $tablet)
         .col-md-#{$i}
-            @include col($i/12)
+            +col($i/12)
 
         .col-md-pull-#{$i}
-            @include shift(-$i/12)
+            +shift(-$i/12)
 
         .col-md-push-#{$i}
-            @include shift($i/12)
+            +shift($i/12)
+
+        .span-md-#{$i}
+            +span($i/12)
 
 @for $i from 1 through 12
     @media screen and (min-width: $desktop)
         .col-lg-#{$i}
-            @include col($i/12)
+            +col($i/12)
 
         .col-lg-pull-#{$i}
-            @include shift(-$i/12)
+            +shift(-$i/12)
 
         .col-lg-push-#{$i}
-            @include shift($i/12)
+            +shift($i/12)
+
+        .span-lg-#{$i}
+            +span($i/12)
 
 
 .container
-    @include center(1200px, 14px)
+    +center(1200px, $gutter)
 
-    &-small
-        max-width: 960px
+    &.-small
+        max-width: 900px
 
-    &-small
-        max-width: 1000px
+    &.-large
+        max-width: (1600px + ($gutter * 2))
+
+    &.-fluid
+        max-width: none
+
 
 .row
-    @include cf()
+    +cf()
+    // display: flex
+    // flex-wrap: wrap
+    // align-items: center
+    //
+    // > *
+    //     box-sizing: border-box
+    //     flex: 0 0 auto
 
 .row-flex
     // display: -ms-flexbox

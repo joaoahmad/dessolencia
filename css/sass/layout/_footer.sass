@@ -1,0 +1,36 @@
+//#-
+
+.footer
+    margin-top: 60px
+    +above(phablet)
+        margin-top: 120px
+
+    > .content
+        padding: 20px 0
+        background: #f7f7f7
+
+        .link
+            @extend %link-none
+            color: $dark
+
+    > .bottom
+        background: $dark
+        color: #fff
+        padding: 4px 0
+        +below(tablet)
+            padding: 10px 0
+
+        .link
+            @extend %link-none
+            color: #fff
+
+        +above(phablet)
+            text-align: right
+    .copy
+        font-size: 10px
+        line-height: 34px
+        text-transform: uppercase
+        font-weight: 500
+
+        +below(tablet)
+            line-height: 20px

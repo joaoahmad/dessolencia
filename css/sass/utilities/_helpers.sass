@@ -2,62 +2,67 @@
 
 // text size ----------
 
-.u-text-medium
+._text-medium
     font-size: 1.6rem
 
-.u-text-large
+._text-large
     font-size: 1.8rem
 
-.u-text-small
+._text-small
     font-size: 1rem
 
 // text weight ----------
 
-.u-text-light
+._text-light
     font-weight: 200
 
-.u-text-medium
+._text-medium
     font-weight: 400
 
-.u-text-strong
+._text-strong
     font-weight: 600
+
+// colors ----------
+
+._color-primary
+    color: $primary
 
 // text align ----------
 
-.u-text-center
+._text-center
     text-align: center
 
-.u-text-left
+._text-left
     text-align: left
 
-.u-text-right
+._text-right
     text-align: right
 
 // margin ----------
 
-.u-margin-bottom
+._margin-bottom
     margin-bottom: 2rem
 
-.u-margin-bottom-small
+._margin-bottom-small
     margin-bottom: 1rem
 
-.u-margin-top
+._margin-top
     margin-top: 2rem
 
-.u-margin-top-small
+._margin-top-small
     margin-top: 1rem
 
 // float ----------
 
-.u-pull-left
+._pull-left
     float: left
 
-.u-pull-right
+._pull-right
     float: right
 
 // hide's & show's ----------
 
-.u-hide
+._hide
     display: none !important
     @media screen and (max-width: $mobile-max)
         &-mobile
@@ -77,20 +82,48 @@
 
 // show's ...
 
-.u-show
+%hide
+    display: none
+
+._show
     display: block !important
-    @media screen and (min-width: $mobile)
-        &-mobile
+
+    &-mobile
+        @extend %hide
+        @media screen and (max-width: $mobile-max)
             display: block !important
 
-    @media screen and (min-width: $phablet)
-        &-phablet
+    &-phablet
+        @extend %hide
+        @media screen and (max-width: $phablet-max)
             display: block !important
 
-    @media screen and (min-width: $tablet)
-        &-tablet
+    &-tablet
+        @extend %hide
+        @media screen and (max-width: $tablet-max)
             display: block !important
 
-    @media screen and (min-width: $desktop)
-        &-desktop
+    &-desktop
+        @extend %hide
+        @media screen and (max-width: $desktop-max)
             display: block !important
+
+
+// flex helpers
+
+._flex
+    @extend %flex
+
+._flex-center
+    @extend %flex
+    align-items: center
+
+._flex-bottom
+    @extend %flex
+    align-self: flex-end
+
+// z-index`s
+
+@for $i from 1 through 10
+    ._z-index-#{$i}
+        z-index: $i * 10

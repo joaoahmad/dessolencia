@@ -1,0 +1,18 @@
+.logo
+    $width: 117px
+    $height: 28px
+    $ratio: $width / $height
+
+    +inline-top
+    width: $width
+    height: $height
+    background: url(../images/designlab.png) no-repeat
+    background-image: url(../images/designlab.svg)
+    background-position: center center
+    background-size: 100%
+
+
+    +below(large-desktop)
+        width: 120px
+        height: 120px / $ratio
+        margin: 21px 20px 0 0
