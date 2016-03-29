@@ -103,14 +103,12 @@ class Map extends React.Component {
         // map.locate();
 
 
-        var loop = setInterval(function(){
-            navigator.geolocation.getCurrentPosition((e) => {
-                let latlng = [e.coords.latitude, e.coords.longitude];
-                map.setView(latlng, 16);
-                gps.setLatLng(latlng);
-                _this.check();
-            });
-        }, 1000);
+        navigator.geolocation.watchPosition((e) => {
+            let latlng = [e.coords.latitude, e.coords.longitude];
+            map.setView(latlng, 16);
+            gps.setLatLng(latlng);
+            _this.check();
+        });
 
         // map.on('locationfound', function(e) {
         //     // gps.setLatLng([e.latlng.lat, e.latlng.lng]);
@@ -136,33 +134,33 @@ class Map extends React.Component {
 
         return (
             <div className={classes}>
-            <MapStatus dangers={this.state.dangers} />
-        <div id="map" className="map"></div>
-    </div>
-);
-}
-
-_handleAddMarker(e){
-    newMarker = new L.marker(e.latlng).addTo(map);
-    // MapActions.addMap(this.state);
-}
-
-_handleSubmit(e){
-    e.preventDefault();
-    console.log(this.state);
-}
-
-_handleMarker(e){
-
-    var {lat, lng} = e.latlng;
-    this.setState({ lat: lat, lng: lng });
-
-    if (!newMarker){
-        this._handleAddMarker(e);
-    }else{
-        newMarker.setLatLng(e.latlng);
+                <MapStatus dangers={this.state.dangers} />
+                <div id="map" className="map"></div>
+            </div>
+        );
     }
-}
+
+    _handleAddMarker(e){
+        newMarker = new L.marker(e.latlng).addTo(map);
+        // MapActions.addMap(this.state);
+    }
+
+    _handleSubmit(e){
+        e.preventDefault();
+        console.log(this.state);
+    }
+
+    _handleMarker(e){
+
+        var {lat, lng} = e.latlng;
+        this.setState({ lat: lat, lng: lng });
+
+        if (!newMarker){
+            this._handleAddMarker(e);
+        }else{
+            newMarker.setLatLng(e.latlng);
+        }
+    }
 }
 
 // ReactMixin(Map.prototype, LinkedStateMixin);

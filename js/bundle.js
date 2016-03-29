@@ -204,14 +204,12 @@ var Map = function (_React$Component) {
 
             // map.locate();
 
-            var loop = setInterval(function () {
-                navigator.geolocation.getCurrentPosition(function (e) {
-                    var latlng = [e.coords.latitude, e.coords.longitude];
-                    map.setView(latlng, 16);
-                    gps.setLatLng(latlng);
-                    _this.check();
-                });
-            }, 1000);
+            navigator.geolocation.watchPosition(function (e) {
+                var latlng = [e.coords.latitude, e.coords.longitude];
+                map.setView(latlng, 16);
+                gps.setLatLng(latlng);
+                _this.check();
+            });
 
             // map.on('locationfound', function(e) {
             //     // gps.setLatLng([e.latlng.lat, e.latlng.lng]);
