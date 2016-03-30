@@ -4,10 +4,10 @@ module.exports = function(grunt){
         bundle: {
             options: {
                 sourceMap: true,
-                sourceMapName: 'js/bundle.map'
+                sourceMapName: 'public/js/bundle.map'
             },
             files: {
-                'js/bundle.js': ['js/bundle.js']
+                'public/js/bundle.js': ['public/js/bundle.js']
             }
         },
 

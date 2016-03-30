@@ -3,7 +3,7 @@ module.exports = function(grunt){
 
         dev: {
             files: {
-                'js/bundle.js': ['js/app/application.js'],
+                'public/js/bundle.js': ['public/js/app/application.js'],
             },
             options: {
                 watch: true,
@@ -14,7 +14,7 @@ module.exports = function(grunt){
 
         dist: {
             files: {
-                'js/bundle.js': ['js/app/application.js'],
+                'public/js/bundle.js': ['public/js/app/application.js'],
             },
             options: {
                 transform: [[ 'babelify', { presets: ["es2015", "react"] } ]]
