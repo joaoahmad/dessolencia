@@ -1,13 +1,7 @@
 {
-  "short_name": "Dessolencia",
-  "name": "Dessolencia App",
-  "gcm_sender_id": "dessolencia",
-  "start_url": "/index.html",
-  "display": "standalone"
+    "name": "Dessolencia App",
+    "short_name": "Dessolencia",
+    "start_url": "/",
+    "display": "standalone",
+    "gcm_sender_id": "151492504507"
 }
-
-
-curl --header "Authorization: key=dessolencia" --header "Content-Type: application/json" https://android.googleapis.com/gcm/send -d "{\"registration\_ids\":[\"etxWpuexuaQ:APA91bEe93h70whFBbANXQqqisYMdEbjgRJZn2cvp877bdOsGbE_JkrP92BaPOqOCPta_-6_8V7c2Ob2L1CwRBfajKgtbUm0t9YUt0T3Q_FjBkpmOqlo3mTUkc9GDtjWC2DvQ-C5Z6G_\"]}"
-
-
-https://android.googleapis.com/gcm/send/etxWpuexuaQ:APA91bEe93h70whFBbANXQqqisYMdEbjgRJZn2cvp877bdOsGbE_JkrP92BaPOqOCPta_-6_8V7c2Ob2L1CwRBfajKgtbUm0t9YUt0T3Q_FjBkpmOqlo3mTUkc9GDtjWC2DvQ-C5Z6G_
