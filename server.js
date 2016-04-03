@@ -4,7 +4,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 
 var mongoose   = require('mongoose');
-mongoose.connect('mongodb:146.148.64.75');
+mongoose.connect('mongodb:146.148.64.75/dessolencia');
 
 var app = express();
 

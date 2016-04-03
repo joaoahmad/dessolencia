@@ -5887,6 +5887,7 @@ img {
   position: relative;
   z-index: 100;
   height: 56px;
+  box-shadow: 0 2px 25px rgba(0, 0, 0, 0.05);
 }
 
 .logo {
@@ -6116,7 +6117,51 @@ img {
   height: 100%;
   width: 100%;
   z-index: 1;
-  background: #f1f1f2;
+  background: #fff;
+}
+
+.observer-wrapper > .button {
+  position: relative;
+  display: block;
+  width: 280px;
+  height: 280px;
+  background: #f1f1f1;
+  border-radius: 50%;
+  margin: 60px auto 0;
+  line-height: 280px;
+  text-align: center;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #9a9a9b;
+}
+.observer-wrapper > .button::before, .observer-wrapper > .button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+.observer-wrapper > .button::before {
+  width: 240px;
+  height: 240px;
+  background: linear-gradient(#e4e4e8, #c3c3c7);
+}
+.observer-wrapper > .button::after {
+  width: 190px;
+  height: 190px;
+  background: #fff;
+}
+.observer-wrapper > .button > .label {
+  position: relative;
+  z-index: 10;
+}
+.observer-wrapper.-itsdangerous > .button::before {
+  background: linear-gradient(#f9bc61, #e76f6f);
+}
+.observer-wrapper.-itsafe > .button::before {
+  background: linear-gradient(#485cc1, #6fe3e7);
 }
 
 /*# sourceMappingURL=main.css.map */
