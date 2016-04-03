@@ -3,7 +3,6 @@ var Area = require('../../models/area');
 
 module.exports.add = function(req, res) {
     var area = new Area(req.body);
-    // res.json(req.body);
     area.save(function(err) {
         if (err) {
             res.send(err);

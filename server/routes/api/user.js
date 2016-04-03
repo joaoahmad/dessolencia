@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');  
+var mongoose = require('mongoose');
 var User = require('../../models/user');
 
 module.exports.add = function(req, res) {
-    var user = new User(req.body.user);
+    var user = new User(req.body);
     user.save(function(err) {
         if (err) {
             res.send(err);
@@ -11,11 +11,8 @@ module.exports.add = function(req, res) {
     });
 };
 
-module.exports.get = function(req, res) { 
-    User.find(function(err, users) {
-        if (err)
-            res.send(err);
-
-        res.json(users);
-    }); 
+module.exports.get = function(req, res) {
+    User.findOne({ name: 'Joao'}).populate('registrations').exec(function(err, user){
+        res.json(user);
+    });
 };

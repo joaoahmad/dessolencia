@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 var users = require('./api/user');
-var markers = require('./api/marker');
 var areas = require('./api/area');
+var gcm_reg = require('./api/gcm_reg');
+var markers = require('./api/marker');
 
 router.route('/users')
     .post(function(req, res){ users.add(req, res) })
@@ -12,6 +13,10 @@ router.route('/users')
 router.route('/areas')
     .post(function(req, res){ areas.add(req, res) })
     .get(function(req, res){ areas.get(req, res) });
+
+router.route('/gcm_reg')
+    .post(function(req, res){ gcm_reg.add(req, res) })
+    .get(function(req, res){ gcm_reg.get(req, res) });
 
 router.route('/markers')
     .post(function(req, res){ markers.add(req, res) })

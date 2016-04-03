@@ -58349,7 +58349,7 @@ _reactDom2.default.render(_react2.default.createElement(
     _routes2.default
 ), document.getElementById('app'));
 
-},{"./routes":298,"react":271,"react-dom":79,"react-router":107}],291:[function(require,module,exports){
+},{"./routes":299,"react":271,"react-dom":79,"react-router":107}],291:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -58382,6 +58382,12 @@ var App = function (_React$Component) {
   }
 
   _createClass(App, [{
+    key: '_getLoginState',
+    value: function _getLoginState() {}
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {}
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -58772,6 +58778,10 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
+var _AppConstants = require('../constants/AppConstants');
+
+var _AppConstants2 = _interopRequireDefault(_AppConstants);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -58817,7 +58827,8 @@ var Observer = function (_React$Component2) {
 
         _this2.state = {
             loading: true,
-            dangers: []
+            dangers: [],
+            changed: false
         };
         return _this2;
     }
@@ -58826,7 +58837,6 @@ var Observer = function (_React$Component2) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             var self = this;
-            // self._check([-22.8565655, -43.4529398]);
             navigator.geolocation.watchPosition(function (e) {
                 self._check([e.coords.latitude, e.coords.longitude]);
             });
@@ -58864,7 +58874,7 @@ var Observer = function (_React$Component2) {
             } else if (safe) {
                 label = 'Tá tranquilo';
             } else {
-                label = 'Perigo à frente!';
+                label = 'Cuidado à frente!';
             }
 
             return _react2.default.createElement(
@@ -58881,12 +58891,34 @@ var Observer = function (_React$Component2) {
             console.log('cheking...');
             _axios2.default.get('/api/areas').then(function (response) {
 
-                var dangers = response.data.reduce(function (dangers, area) {
+                var state = {};
+
+                state.dangers = response.data.reduce(function (dangers, area) {
                     if ((0, _pointInPolygon2.default)(latlng, JSON.parse(area.coordinates))) dangers.push(area);
                     return dangers;
                 }, []);
-                console.log('dangers', dangers);
-                self.setState({ dangers: dangers, loading: false });
+
+                state.loading = false;
+                state.changed = JSON.stringify(state.dangers) != JSON.stringify(self.state.dangers);
+
+                // if(state.changed){
+                console.log('hey');
+                (0, _axios2.default)({
+                    method: 'POST',
+                    url: _AppConstants2.default.GCM_URL,
+                    headers: {
+                        'Authorization': 'key=' + _AppConstants2.default.GCM_API_KEY,
+                        'Content-Type': 'application/json'
+                    },
+                    data: {
+                        registration_ids: _AppConstants2.default.REGISTRATION_IDS
+                    }
+                }).then(function (response) {
+                    console.log(response.data);
+                });
+                // }
+
+                self.setState(state);
             });
         }
     }]);
@@ -58896,7 +58928,7 @@ var Observer = function (_React$Component2) {
 
 module.exports = Observer;
 
-},{"axios":1,"classnames":18,"lodash":46,"point-in-polygon":78,"react":271,"react-router":107,"when":289}],296:[function(require,module,exports){
+},{"../constants/AppConstants":298,"axios":1,"classnames":18,"lodash":46,"point-in-polygon":78,"react":271,"react-router":107,"when":289}],296:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -58991,6 +59023,22 @@ var MapPage = function (_React$Component) {
 module.exports = MapPage;
 
 },{"../Map":292,"react":271,"react-router":107}],298:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var API_URL = '/api';
+exports.default = {
+  API_URL: API_URL,
+
+  GCM_URL: 'https://android.googleapis.com/gcm/send',
+  GCM_API_KEY: 'AIzaSyC_W8VI27rzwpswoGfVwFmO0RGTTVTZz-Y',
+  REGISTRATION_IDS: ['dd39e4-cvkI:APA91bH4gONhDNS8Oshqh-nGv4Atp3yQsIoW84ZymYjbaJZ2WwGs-v59FbAoGtL8rMK9JhRK2VnlTJjuUAlTZKyuKa3mFyy_lqXBY75SrZN5ullSrgNresuQXzidqJTZjWYnPVmqsh7B']
+
+};
+
+},{}],299:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');

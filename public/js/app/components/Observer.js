@@ -6,6 +6,8 @@ import axios from 'axios';
 import _ from 'lodash';
 import classnames from 'classnames';
 
+import CONSTANTS from '../constants/AppConstants';
+
 class ObserverButton extends React.Component {
     render(){
         return (
@@ -22,13 +24,13 @@ class Observer extends React.Component {
         super();
         this.state = {
             loading: true,
-            dangers: []
+            dangers: [],
+            changed: false
         }
     }
 
     componentDidMount(){
         var self = this;
-        // self._check([-22.8565655, -43.4529398]);
         navigator.geolocation.watchPosition((e) => {
             self._check([e.coords.latitude, e.coords.longitude]);
         });
@@ -61,7 +63,7 @@ class Observer extends React.Component {
         }else if (safe) {
             label = 'Tá tranquilo';
         }else{
-            label = 'Perigo à frente!';
+            label = 'Cuidado à frente!';
         }
 
         return (
@@ -79,13 +81,35 @@ class Observer extends React.Component {
         axios.get('/api/areas')
         .then(function(response){
 
-            let dangers = response.data.reduce((dangers, area) => {
+            let state = {}
+
+            state.dangers = response.data.reduce((dangers, area) => {
                 if (inside(latlng, JSON.parse(area.coordinates)))
                     dangers.push(area);
                 return dangers
             }, [])
-            console.log('dangers', dangers);
-            self.setState({dangers: dangers, loading: false});
+
+            state.loading = false;
+            state.changed = ( JSON.stringify(state.dangers) != JSON.stringify(self.state.dangers));
+
+            // if(state.changed){
+                console.log('hey');
+                axios({
+                    method: 'POST',
+                    url: CONSTANTS.GCM_URL,
+                    headers: {
+                        'Authorization': 'key=' + CONSTANTS.GCM_API_KEY,
+                        'Content-Type': 'application/json'
+                    },
+                    data: {
+                        registration_ids: CONSTANTS.REGISTRATION_IDS
+                    }
+                }).then((response) => {
+                    console.log(response.data);
+                })
+            // }
+
+            self.setState(state);
         });
     }
 
