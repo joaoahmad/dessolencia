@@ -4,16 +4,16 @@ import {Router, Route, browserHistory} from 'react-router';
 import routes from './routes';
 
 if ('serviceWorker' in navigator) {
-    console.log('Service Worker is supported');
+    // console.log('Service Worker is supported');
     navigator.serviceWorker.register('sw.js').then(function(reg) {
-        console.log(':^)', reg);
+        // console.log(':^)', reg);
         reg.pushManager.subscribe({
             userVisibleOnly: true
         }).then(function(sub) {
-            console.log('endpoint:', sub.endpoint);
+            // console.log('endpoint:', sub.endpoint);
         });
     }).catch(function(error) {
-        console.log(':^(', error);
+        // console.log(':^(', error);
     });
 }
 

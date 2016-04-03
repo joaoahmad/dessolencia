@@ -1,7 +1,8 @@
 {
     "name": "Dessolencia App",
-    "short_name": "Dessolencia",
+    "short_name": "Dessolencias",
     "start_url": "/",
     "display": "standalone",
-    "gcm_sender_id": "151492504507"
+    "gcm_sender_id": "468053776411",
+    "permissions": ["gcm", "storage", "notifications"]
 }

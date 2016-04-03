@@ -1,10 +1,10 @@
 .header-nav
     +cf
     position: relative
-    padding: 40px 40px 0
+    padding: 0
 
     .logo
-        float: left 
+        float: left
 
         +below(breakmenu)
             margin: 14px 0
@@ -12,13 +12,9 @@
             float: left
 
     .menu-list
-        float: right
         +below(breakmenu)
             display: block
             margin: 0 auto
-
-        .menu-item
-            margin-left: 30px
 
     .menu
         +below(breakmenu)
@@ -56,7 +52,7 @@
 
     .menu-item
         margin: 0
-        padding: 30px 10px 13px
+        padding: 0
 
         +above(desktop)
             padding: 0
@@ -69,14 +65,11 @@
 
 
     .link
-        padding: 0 4px
-        line-height: 32px
+        padding: 0 20px
         display: block
         font-size: 1.6rem
+        line-height: 56px
+        font-size: 14px
 
         // +above(breakmenu)
             // text-transform: uppercase
-
-        +below(breakmenu)
-            font-size: 20px
-            line-height: 48px

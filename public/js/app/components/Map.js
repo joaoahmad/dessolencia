@@ -41,7 +41,7 @@ var data = [
     },
 ]
 
-console.log(data);
+// console.log(data);
 
 var circle_options = {
     color: '#ff0000',      // Stroke color
@@ -131,10 +131,10 @@ class Map extends React.Component {
             "map-box": true,
             "-notsafe": (dangers.length > 0),
         });
+            // <MapStatus dangers={this.state.dangers} />
 
         return (
             <div className={classes}>
-                <MapStatus dangers={this.state.dangers} />
                 <div id="map" className="map"></div>
             </div>
         );

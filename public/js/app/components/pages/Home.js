@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router';
-import Map from '../Map';
+import Observer from '../Observer';
 
 class Home extends React.Component {
 
   render() {
 
     return (
-        <Map />
+        <div className="container">
+            <Observer />
+        </div>
     );
   }
 
