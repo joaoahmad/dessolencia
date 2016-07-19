@@ -2,59 +2,21 @@ import React from 'react';
 // import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import { Route, RouteHandler, Link } from 'react-router';
 import mapbox from 'mapbox.js';
+import axios from 'axios';
 import leafletDraw from 'leaflet-draw';
 import leafletPip from 'leaflet-pip';
 import classNames from 'classnames';
 
 import MapStatus from './MapStatus';
 
-// import ReactMixin from 'react-mixin';
-// import MapActions from '../actions/MapActions';
-
-let map, gps, featureGroup;
-
-var data = [
-    {
-        id: '123',
-        name: 'Morro do Chapadão',
-        coordinates: [[[ -43.365655, -22.829945 ], [ -43.360205, -22.826108 ], [ -43.363853, -22.824605 ], [ -43.367994, -22.821985 ], [ -43.370075, -22.819602 ], [ -43.370204, -22.82243 ], [ -43.375225, -22.826158  ], [ -43.37338, -22.830796 ], [ -43.371019, -22.830113 ], [ -43.369689, -22.830222 ], [ -43.365655, -22.829945 ]]]
-    },
-    {
-        id: '123',
-        name: 'Sulacap',
-        coordinates: [[[ -43.383040, -22.887498 ], [ -43.393040, -22.896498 ],[ -43.403040, -22.883498 ]]]
-    },
-    {
-        id: '123',
-        name: 'Taquara',
-        coordinates: [[[ -43.388206, -23.010105 ], [ -43.378206, -22.990105 ], [ -43.368206, -22.990105 ], [ -43.358206, -23.000105 ]]]
-    },
-    {
-        id: '123',
-        name: 'Barra da Tijuca',
-        coordinates: [[[ -43.388206, -23.010105 ], [ -43.378206, -22.990105 ], [ -43.368206, -22.990105 ], [ -43.358206, -23.000105 ]]]
-    },
-    {
-        id: '123',
-        name: 'Casa',
-        coordinates: [[[ -43.451591, -22.855726 ],[ -43.452591, -22.846726 ],[ -43.453591, -22.857726 ],[ -43.452591, -22.856726 ]]]
-    },
-]
-
-// console.log(data);
-
-var circle_options = {
-    color: '#ff0000',      // Stroke color
-    opacity: 0.6,         // Stroke opacity
-    weight: 0,         // Stroke weight
-    fillOpacity: 0.4    // Fill opacity
-};
+let map, gps, featureGroup = null;
 
 class Map extends React.Component {
     constructor() {
         super();
         this.state = {
-            dangers: [],
+            areas: [],
+            inPlace: []
         }
         L.mapbox.accessToken = 'pk.eyJ1Ijoiam9hb2FobWFkIiwiYSI6ImZjZmMyMTcwMWU1NWZiZGRiNWY5NGU4NGEyYTFiYTNmIn0.U4_OOvESGl-pX5MpEcQqOQ';
     }
@@ -66,48 +28,108 @@ class Map extends React.Component {
         .map('map', 'mapbox.streets-basic', { zoomControl: false })
         .setView([-22.928577, -43.456308], 12);
 
-        var features = data.reduce((items, item) => {
-            items.push({
-                type: "Feature",
-                geometry: {
-                    type: "Polygon",
-                    coordinates: item.coordinates,
-                },
-                properties: {
-                    name: item.name
-                }
-            });
-            return items;
-        }, []);
+        const revertLatLng = (arr) => {
+            if(!Array.isArray(arr) || !arr.length)
+            return false;
 
-        var geojson = {
-            type: "FeatureCollection",
-            features: features,
+            return arr.map(item => {
+                if(Array.isArray(item[0])){
+                    return revertLatLng(item)
+                }else{
+                    return [item[1], item[0]]
+                }
+            })
         }
 
-        featureGroup = L.geoJson(geojson).addTo(map);
+        this.fetchData().then(() => {
+            console.log(_this.state.areas);
 
-        var drawControl = new L.Control.Draw({
-            edit: {
-                featureGroup: featureGroup
+            var features = _this.state.areas.reduce((items, item) => {
+                items.push({
+                    type: "Feature",
+                    geometry: {
+                        type: "Polygon",
+                        coordinates: item.coordinates,
+                    },
+                    properties: {
+                        _id: item._id,
+                        strategy: item.strategy,
+                        level: item.level,
+                        type: item.type,
+                    }
+                });
+                return items;
+            }, []);
+
+            var geojson = {
+                type: "FeatureCollection",
+                features: features,
             }
-        }).addTo(map);
 
-        map.on('draw:created', function(e) {
-            console.log(JSON.stringify(markers));
-            featureGroup.addLayer(e.layer);
+            featureGroup = L.geoJson(geojson, {
+                style: function (feature) {
+                    // max opacity 0.5
+                    const opacity = (feature.properties.level / 10) / 2;
+                    return {
+                        color: 'red',
+                        stroke: false,
+                        fillOpacity: opacity
+                    };
+                },
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup(feature.properties.type);
+                }
+            }).addTo(map);
+
+            var drawControl = new L.Control.Draw({
+                edit: {
+                    featureGroup: featureGroup
+                }
+            }).addTo(map);
+
+
+            map.on('draw:created', function(e) {
+                featureGroup.addLayer(e.layer);
+                var feature = e.layer.toGeoJSON()
+                const data = {
+                    coordinates: feature.geometry.coordinates,
+                    strategy: 'include',
+                    level: 10,
+                    type: 'criminal',
+                }
+
+                axios.post('/api/areas', data)
+                .then(function(response){
+                    console.log(response);
+                    // const state = {}
+                    // state.areas = response.data
+                    // self.setState(state);
+                });
+
+
+            });
+
+
+            // TODO: edit drawn polygon
+            map.on('draw:edited', function(e) {
+                e.layers.eachLayer(function (layer) {
+                    console.log(layer);
+                    //do whatever you want, most likely save back to db
+                });
+            });
+
         });
-
-        gps = L.marker([0,0]).addTo(map);
-
-        // map.locate();
+        gps = L.circleMarker([0,0]).addTo(map);
 
 
         navigator.geolocation.watchPosition((e) => {
-            let latlng = [e.coords.latitude, e.coords.longitude];
-            map.setView(latlng, 16);
-            gps.setLatLng(latlng);
-            _this.check();
+            // setInterval(function(){
+                console.log('watching...');
+                let latlng = [e.coords.latitude, e.coords.longitude];
+                map.setView(latlng, 16);
+                gps.setLatLng(latlng);
+                _this.check();
+            // }, 1000)
         });
 
         // map.on('locationfound', function(e) {
@@ -118,23 +140,39 @@ class Map extends React.Component {
 
     }
 
+    fetchData(){
+        const self = this;
+        return axios.get('/api/areas')
+        .then(function(response){
+            console.log('response', response);
+            const state = {}
+            state.areas = response.data
+            self.setState(state);
+        });
+    }
+
     check(){
+        if (!featureGroup)
+        return
+
         var latlng = gps.getLatLng();
         var results = leafletPip.pointInLayer([latlng.lng, latlng.lat], featureGroup);
-        this.setState({dangers: results});
+        this.setState({inPlace: results});
     }
 
     render() {
-        let dangers = this.state.dangers;
+
+        const { inPlace } = this.state
 
         let classes = classNames("map-container",{
             "map-box": true,
-            "-notsafe": (dangers.length > 0),
+            "-notsafe": (inPlace.length > 0),
         });
-            // <MapStatus dangers={this.state.dangers} />
+        // <MapStatus areas={this.state.areas} />
 
         return (
             <div className={classes}>
+                <MapStatus inPlace={inPlace} />
                 <div id="map" className="map"></div>
             </div>
         );

@@ -13,12 +13,14 @@ class MapStatus extends React.Component {
     }
 
     render() {
+        const { inPlace } = this.props
+
         let content;
         let classes = classNames("map-status", {
-            "-notsafe": (this.props.dangers.length),
+            "-notsafe": (inPlace.length),
         });
-        if (this.props.dangers.length) {
-            content = this.props.dangers.map((location, i) => (<div key="{i}">{location.feature.properties.name}</div>));
+        if (inPlace.length) {
+            content = inPlace.map((location, i) => (<div key="{i}">{location.feature.properties.name}</div>));
         }else{
             content = 'Ta tranquilo';
         }

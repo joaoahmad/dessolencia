@@ -5,11 +5,14 @@ import App from './components/App';
 // Pages
 import Home from './components/pages/Home';
 import Map from './components/pages/Map';
+import Add from './components/pages/Add';
 
 let routes = (
     <Route path="/" component={App}>
-        <IndexRoute component={Home}/>
+        <IndexRoute component={Map}/>
         <Route path="/map" component={Map} />
+        <Route path="/button" component={Home} />
+        <Route path="/add" component={Add} />
     </Route>
 );
 

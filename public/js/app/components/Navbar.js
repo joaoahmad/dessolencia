@@ -9,11 +9,12 @@ class Navbar extends React.Component {
         this.menu = [
             { label: 'Home', link: '/' },
             { label: 'Map', link: '/map' },
+            { label: 'Add', link: '/add' },
         ]
     }
 
     render() {
-        
+
         var menu = this.menu.map((item, i) => {
             return (
                 <li className="menu-item" key={i}>

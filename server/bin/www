@@ -13,22 +13,22 @@ var fs = require('fs');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '4000');
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
-
+// letsencrypt certonly --webroot -w /home/joao/Sites/dessolencia -d jokerjp.ddns.net -d www.jokerjp.ddns.net
 
  var options = {
-     key: fs.readFileSync('/etc/apache2/ssl/apache.key'),
-     cert: fs.readFileSync('/etc/apache2/ssl/apache.crt'),
-     requestCert: false,
-     rejectUnauthorized: false
+     key: fs.readFileSync('/usr/lib/ssl/misc/newkey.pem'),
+     cert: fs.readFileSync('/usr/lib/ssl/misc/newcert.pem'),
+     passphrase: 'jp0204'
  };
 
-var server =  https.createServer(options, app).listen(3000);
+var server =  https.createServer(options, app).listen(4000);
+// var server =  app;
 
 /**
  * Listen on provided port, on all network interfaces.
