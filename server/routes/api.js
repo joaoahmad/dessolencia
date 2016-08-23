@@ -14,6 +14,9 @@ router.route('/areas')
     .post(function(req, res){ areas.add(req, res) })
     .get(function(req, res){ areas.get(req, res) });
 
+router.route('/areas/ping')
+    .post(function(req, res){ areas.ping(req, res) });
+
 router.route('/gcm_reg')
     .post(function(req, res){ gcm_reg.add(req, res) })
     .get(function(req, res){ gcm_reg.get(req, res) });
