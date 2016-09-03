@@ -27,7 +27,7 @@ app.set('port', port);
      passphrase: 'jp0204'
  };
 
-var server =  https.createServer(options, app).listen(4000);
+var server =  https.createServer(options, app).listen(process.env.PORT || 4000);
 // var server =  app;
 
 /**

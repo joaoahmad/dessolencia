@@ -4,11 +4,18 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var passport = require('passport');
 var mongoose   = require('mongoose');
 mongoose.connect('mongodb://joker:jp@ds023088.mlab.com:23088/dessolencia');
 
 var app = express();
+
+app.set('security.salt', 'IA*n6u2*VKqRDc&&%Qx*yeNNQ%nMtr!igD^(Y(@V');
+
+// Initialize passport for use
+app.use(passport.initialize());
+
+require('./config/passport')(passport);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
